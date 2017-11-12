@@ -6,7 +6,8 @@
 ## Features
 
 - Registering an account
-- Viewing a talk posted by a user of the application
+- Logging in with an existing account
+- Viewing a talk posted by a registered user
 
 
 ## Licence
