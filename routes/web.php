@@ -18,4 +18,7 @@ Route::get('talks/{talk}', 'TalkController@show')->name('talk.show');
 Route::namespace('Auth')->group(function () {
     Route::get('register', 'RegisterController@create')->name('auth.register.create');
     Route::post('register', 'RegisterController@store')->name('auth.register.store');
+
+    Route::get('login', 'LoginController@create')->name('auth.login.create');
+    Route::post('login', 'LoginController@store')->name('auth.login.store');
 });
