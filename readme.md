@@ -5,6 +5,7 @@
 
 ## Features
 
+- Registering an account
 - Viewing a talk posted by a user of the application
 
 

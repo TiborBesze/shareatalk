@@ -11,4 +11,11 @@
 |
 */
 
+Route::get('/', 'HomeController@index')->name('home');
+
 Route::get('talks/{talk}', 'TalkController@show')->name('talk.show');
+
+Route::namespace('Auth')->group(function () {
+    Route::get('register', 'RegisterController@create')->name('auth.register.create');
+    Route::post('register', 'RegisterController@store')->name('auth.register.store');
+});
