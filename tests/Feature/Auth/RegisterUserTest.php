@@ -53,4 +53,55 @@ class RegisterUserTest extends TestCase
         $this->assertInstanceOf(User::class, $user);
         $this->assertAuthenticatedAs($user);
     }
+
+    /** @test */
+    public function authenticated_users_cannot_access_the_registration_page()
+    {
+        $user = User::create([
+            'firstname'     => 'John',
+            'lastname'      => 'Doe',
+            'email'         => 'john.doe@example.com',
+            'password'      => bcrypt('password'),
+        ]);
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->be($user);
+        $this->assertAuthenticatedAs($user);
+
+        $response = $this->get(route('auth.register.create'));
+        $response->assertRedirect(route('home'));
+    }
+
+    /** @test */
+    public function authenticated_users_cannot_perform_a_registration()
+    {
+        $user_a = User::create([
+            'firstname'     => 'John',
+            'lastname'      => 'Doe',
+            'email'         => 'john.doe@example.com',
+            'password'      => bcrypt('password'),
+        ]);
+
+        $this->assertInstanceOf(User::class, $user_a);
+        $this->be($user_a);
+        $this->assertAuthenticatedAs($user_a);
+
+        $user_b = User::create([
+            'firstname'     => 'Jane',
+            'lastname'      => 'Doe',
+            'email'         => 'jane.doe@example.com',
+            'password'      => bcrypt('password'),
+        ]);
+
+        $this->assertInstanceOf(User::class, $user_b);
+
+        $response = $this->post(route('auth.register.store'), [
+            '_token'    => csrf_token(),
+            'email'     => 'jane.doe@example.com',
+            'password'  => 'password',
+        ]);
+
+        $response->assertRedirect(route('home'));
+        $this->assertAuthenticatedAs($user_a);
+    }
 }
