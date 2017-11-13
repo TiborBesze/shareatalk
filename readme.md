@@ -8,6 +8,7 @@
 - Registering an account
 - Logging in with an existing account
 - Viewing a talk posted by a registered user
+- Posting talks when logged in
 
 
 ## Licence
