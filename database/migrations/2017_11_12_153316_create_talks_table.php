@@ -22,7 +22,7 @@ class CreateTalksTable extends Migration
             $table->string('thumbnail');
             $table->integer('width');
             $table->integer('height');
-            $table->integer('platform');
+            $table->string('platform');
             $table->timestamps();
         });
     }
