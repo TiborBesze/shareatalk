@@ -26,8 +26,6 @@ Route::namespace('Auth')->group(function () {
 
     Route::get('login', 'LoginController@create')->name('auth.login.create');
     Route::post('login', 'LoginController@store')->name('auth.login.store');
-});
 
-Route::get('reset', function () {
-    Auth::logout();
+    Route::delete('logout', 'LoginController@destroy')->name('auth.login.destroy');
 });

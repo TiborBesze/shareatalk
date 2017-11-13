@@ -7,6 +7,7 @@
         <meta name="description" content="@yield('description', env('APP_DESCRIPTION'))">
     </head>
     <body>
+        @include('layout.partials._nav')
         @yield('content')
     </body>
 </html>

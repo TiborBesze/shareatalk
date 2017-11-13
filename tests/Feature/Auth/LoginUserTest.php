@@ -103,4 +103,33 @@ class LoginUserTest extends TestCase
         $response->assertRedirect(route('home'));
         $this->assertAuthenticatedAs($user_a);
     }
+
+    /** @test */
+    public function authenticated_users_can_log_out()
+    {
+        $this->disableExceptionHandling();
+
+        $user = User::create([
+            'firstname'     => 'John',
+            'lastname'      => 'Doe',
+            'email'         => 'john.doe@example.com',
+            'password'      => bcrypt('password'),
+        ]);
+
+        $this->be($user);
+        $this->assertAuthenticatedAs($user);
+
+        $response = $this->delete(route('auth.login.destroy'), []);
+        $response->assertRedirect(route('home'));
+        $this->assertGuest();
+    }
+
+    /** @test */
+    public function guests_cannot_perform_logout()
+    {
+        $this->assertGuest();
+
+        $response = $this->delete(route('auth.login.destroy'), []);
+        $response->assertRedirect(route('home'));
+    }
 }

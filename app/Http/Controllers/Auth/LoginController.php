@@ -12,7 +12,11 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest', [
+            'except'    => [
+                'destroy',
+            ],
+        ]);
     }
 
     public function create()
@@ -25,8 +29,22 @@ class LoginController extends Controller
         return $this->login($request);
     }
 
+    public function destroy(Request $request)
+    {
+        return $this->logout($request);
+    }
+
     protected function redirectPath()
     {
         return route('home');
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect($this->redirectPath());
     }
 }
