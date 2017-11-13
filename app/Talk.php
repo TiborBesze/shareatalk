@@ -15,4 +15,9 @@ class Talk extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function likers()
+    {
+        return $this->belongsToMany(User::class, 'likes', 'talk_id', 'user_id');
+    }
 }

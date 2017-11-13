@@ -18,6 +18,9 @@ Route::prefix('talks')->group(function () {
     Route::post('/', 'TalkController@store')->name('talk.store');
 
     Route::get('{talk}', 'TalkController@show')->name('talk.show');
+
+    Route::post('{talk}/like', 'LikeController@store')->name('like.store');
+    Route::delete('{talk}/like', 'LikeController@destroy')->name('like.destroy');
 });
 
 Route::namespace('Auth')->group(function () {
