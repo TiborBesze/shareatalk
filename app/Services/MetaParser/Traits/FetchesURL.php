@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\MetaParser\Drivers;
+namespace App\Services\MetaParser\Traits;
 
 trait FetchesURL
 {

@@ -2,6 +2,9 @@
 
 namespace App\Services\MetaParser\Drivers;
 
+use App\Services\MetaParser\Traits\LoadsHTML;
+use App\Services\MetaParser\Traits\FetchesURL;
+
 class TedDriver implements DriverInterface
 {
     use FetchesURL, LoadsHTML;
