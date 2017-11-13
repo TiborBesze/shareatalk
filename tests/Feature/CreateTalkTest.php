@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Talk;
 use App\User;
 use Tests\TestCase;
+use Illuminate\Auth\AuthenticationException;
 use App\Services\MetaParser\FakeDriverResolver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Services\MetaParser\DriverResolverInterface;
@@ -58,8 +59,8 @@ class CreateTalkTest extends TestCase
 
         $url = 'https://www.example.com/example-video';
 
-        $parser = new FakeDriverResolver;
-        $this->app->instance(DriverResolverInterface::class, $parser);
+        $resolver = new FakeDriverResolver;
+        $this->app->instance(DriverResolverInterface::class, $resolver);
 
         $response = $this->post(route('talk.store'), [
             '_token'    => csrf_token(),
@@ -71,5 +72,25 @@ class CreateTalkTest extends TestCase
         $this->assertInstanceOf(Talk::class, $talk);
         $this->assertEquals($url, optional($talk)->url);
         $response->assertRedirect(route('talk.show', ['talk' => optional($talk)->id]));
+    }
+
+    /** @test */
+    public function guests_cannot_post_a_talk()
+    {
+        $this->assertGuest();
+        $this->assertNull(Talk::first());
+
+        $url = 'https://www.example.com/test-video';
+
+        $resolver = new FakeDriverResolver;
+        $this->app->instance(DriverResolverInterface::class, $resolver);
+
+        $response = $this->post(route('talk.store', [
+            '_token'    => csrf_token(),
+            'url'       => $url,
+        ]));
+
+        $this->assertNull(Talk::first());
+        $response->assertRedirect(route('auth.login.create'));
     }
 }
