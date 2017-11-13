@@ -23,6 +23,7 @@ class CreateTalksTable extends Migration
             $table->integer('width');
             $table->integer('height');
             $table->string('platform');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

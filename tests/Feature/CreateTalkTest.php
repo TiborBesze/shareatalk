@@ -93,4 +93,27 @@ class CreateTalkTest extends TestCase
         $this->assertNull(Talk::first());
         $response->assertRedirect(route('auth.login.create'));
     }
+
+    /** @test */
+    public function posting_a_talk_associates_it_with_the_logged_in_user()
+    {
+        $this->be($this->user);
+        $this->assertAuthenticatedAs($this->user);
+
+        $url = 'https://www.example.com/test-video';
+
+        $talk = $this->user->talks()->create([
+            'url'           => $url,
+            'embed_url'     => $url,
+            'title'         => '',
+            'description'   => '',
+            'thumbnail'     => '',
+            'width'         => 0,
+            'height'        => 0,
+            'platform'      => 'fake',
+        ]);
+
+        $this->assertInstanceOf(User::class, $talk->user);
+        $this->assertEquals($this->user->id, $talk->user->id);
+    }
 }

@@ -27,6 +27,7 @@ class ViewTalkTest extends TestCase
             'width'         => 1280,
             'height'        => 720,
             'platform'      => 'youtube',
+            'user_id'       => 1,
         ]);
 
         $response = $this->get(route('talk.show', ['talk' => $talk->id]));

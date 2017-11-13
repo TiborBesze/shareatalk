@@ -35,7 +35,9 @@ class TalkController extends Controller
             return redirect()->back();
         }
 
-        $talk = Talk::create($driver->parse($url));
+        $talk = Talk::make($driver->parse($url));
+        $talk->user_id = auth()->user()->id;
+        $talk->save();
 
         return redirect()->route('talk.show', ['talk' => $talk->id]);
     }
