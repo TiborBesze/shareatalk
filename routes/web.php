@@ -13,7 +13,12 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('talks/{talk}', 'TalkController@show')->name('talk.show');
+Route::prefix('talks')->group(function () {
+    Route::get('create', 'TalkController@create')->name('talk.create');
+    Route::post('/', 'TalkController@store')->name('talk.store');
+
+    Route::get('{talk}', 'TalkController@show')->name('talk.show');
+});
 
 Route::namespace('Auth')->group(function () {
     Route::get('register', 'RegisterController@create')->name('auth.register.create');
@@ -21,4 +26,8 @@ Route::namespace('Auth')->group(function () {
 
     Route::get('login', 'LoginController@create')->name('auth.login.create');
     Route::post('login', 'LoginController@store')->name('auth.login.store');
+});
+
+Route::get('reset', function () {
+    Auth::logout();
 });
