@@ -11,7 +11,9 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js([
+mix.scripts([
+    'resources/assets/js/jquery.min.js',
+    'resources/assets/js/bootstrap.min.js',
     'resources/assets/js/app.js'
 ], 'public/js/shareatalk.js')
 .styles([
