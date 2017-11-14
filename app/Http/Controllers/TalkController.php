@@ -46,12 +46,22 @@ class TalkController extends Controller
 
     public function show(Talk $talk)
     {
+        $talk->load('user', 'likers');
+
         $user = auth()->user();
 
-        $talk->load('user', 'likers');
-        $followable = $user->id !== $talk->user->id;
-        $following = $user->following()->exists($talk->user);
-        $liked = $user->liked_talks()->exists($talk);
+        if ($user) {
+            $followable = $user->id !== $talk->user->id;
+            $likable = 1;
+            $following = $user->following()->exists($talk->user);
+            $liked = $user->liked_talks()->exists($talk);
+        } else {
+            $followable = 0;
+            $likable = 0;
+            $following = 0;
+            $liked = 0;
+        }
+
 
         return view('talk.show')->with([
             'talk'          => $talk,

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Talk;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -18,7 +18,14 @@ class ViewTalkTest extends TestCase
         $title = 'Cruddy by Design';
         $description = 'Adam Wathan\'s Laracon US 2017 talk';
 
-        $talk = Talk::create([
+        $user = User::create([
+            'firstname'     => 'John',
+            'lastname'      => 'Doe',
+            'email'         => 'john.doe@example.com',
+            'password'      => bcrypt('password')
+        ]);
+
+        $talk = $user->talks()->create([
             'url'           => 'https://www.youtube.com/watch?v=MF0jFKvS4SI',
             'embed_url'     => 'https://www.youtube.com/embed/MF0jFKvS4SI',
             'title'         => $title,
