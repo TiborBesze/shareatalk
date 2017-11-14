@@ -22,7 +22,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="pull-right">
-                    @includeWhen($likable, 'talk.partials._like')
+                    @includeWhen($likeable, 'talk.partials._like')
                 </div>
             </div>
         </div>
