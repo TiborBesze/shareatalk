@@ -16,5 +16,5 @@ mix.js([
 ], 'public/js/shareatalk.js')
 .styles([
     'resources/assets/css/bootstrap.min.css'
-], 'public/js/shareatalk.css')
+], 'public/css/shareatalk.css')
 .version();
