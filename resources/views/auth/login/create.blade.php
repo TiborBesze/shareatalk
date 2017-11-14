@@ -13,7 +13,7 @@
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                 <label for="email" class="control-label">E-Mail Address</label>
                 <div>
-                    <input type="email" id="email" class="form-control" name="email" placeholder="E-Mail Address" autocomplete="email">
+                    <input type="email" id="email" class="form-control" name="email" placeholder="E-Mail Address" autocomplete="email" autofocus>
                 </div>
 
                 @if ($errors->has('email'))

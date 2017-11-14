@@ -13,7 +13,7 @@
             <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
                 <label for="firstname" class="control-label">First Name</label>
                 <div>
-                    <input type="text" id="firstname" class="form-control" name="firstname" placeholder="First Name" autocomplete="firstname" value="{{ old('firstname') }}" required>
+                    <input type="text" id="firstname" class="form-control" name="firstname" placeholder="First Name" autocomplete="firstname" value="{{ old('firstname') }}" autofocus required>
                 </div>
 
                 @if ($errors->has('firstname'))

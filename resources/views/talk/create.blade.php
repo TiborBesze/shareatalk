@@ -13,7 +13,7 @@
             <div class="form-group{{ $errors->has('url') ? ' has-error' : '' }}">
                 <label for="url" class="control-label">URL</label>
                 <div>
-                    <input type="text" id="url" class="form-control" name="url" placeholder="URL">
+                    <input type="text" id="url" class="form-control" name="url" placeholder="URL" autofocus>
                 </div>
 
                 @if ($errors->has('url'))
