@@ -17,6 +17,7 @@ mix.scripts([
     'resources/assets/js/app.js'
 ], 'public/js/shareatalk.js')
 .styles([
-    'resources/assets/css/bootstrap.min.css'
+    'resources/assets/css/bootstrap.min.css',
+    'resources/assets/css/app.css'
 ], 'public/css/shareatalk.css')
 .version();
