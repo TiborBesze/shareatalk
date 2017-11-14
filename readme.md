@@ -10,6 +10,7 @@
 - Viewing a talk posted by a registered user
 - Posting talks when logged in
 - Liking / Unliking talks
+- Following other users
 
 
 ## Licence

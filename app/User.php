@@ -42,4 +42,30 @@ class User extends Authenticatable
 
         return !!$result;
     }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+    }
+
+    public function follow(User $user)
+    {
+        $result = $this->following()->syncWithoutDetaching([
+            'following_id'  => $user->id,
+        ]);
+
+        return in_array($user->id, $result['attached'], true);
+    }
+
+    public function unfollow(User $user)
+    {
+        $result = $this->following()->detach($user->id);
+
+        return !!$result;
+    }
 }

@@ -23,6 +23,11 @@ Route::prefix('talks')->group(function () {
     Route::delete('{talk}/like', 'LikeController@destroy')->name('like.destroy');
 });
 
+Route::prefix('users')->group(function () {
+    Route::post('{user}/follow', 'FollowController@store')->name('follow.store');
+    Route::delete('{user}/follow', 'FollowController@destroy')->name('follow.destroy');
+});
+
 Route::namespace('Auth')->group(function () {
     Route::get('register', 'RegisterController@create')->name('auth.register.create');
     Route::post('register', 'RegisterController@store')->name('auth.register.store');
