@@ -11,6 +11,7 @@
 - Posting talks when logged in
 - Liking / Unliking talks
 - Following other users
+- News feed
 
 
 ## Licence

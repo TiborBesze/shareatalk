@@ -19,7 +19,7 @@ class HomeController extends Controller
 
     protected function authenticated()
     {
-        $talks = Talk::all();
+        $talks = Talk::all()->reverse();
 
         return view('user.index')->with([
             'talks'     => $talks,
