@@ -44,6 +44,11 @@ class RegisterController extends Controller
         return route('home');
     }
 
+    protected function registered(Request $request, $user)
+    {
+        session()->flash('flash_message', 'Registration successful. You are now logged in!');
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [

@@ -39,12 +39,19 @@ class LoginController extends Controller
         return route('home');
     }
 
+    protected function authenticated(Request $request, $user)
+    {
+        session()->flash('flash_message', 'You are now logged in!');
+    }
+
     public function logout(Request $request)
     {
         $this->guard()->logout();
 
         $request->session()->invalidate();
 
-        return redirect($this->redirectPath());
+        return redirect($this->redirectPath())->with([
+            'flash_message' => 'You have been logged out!',
+        ]);
     }
 }

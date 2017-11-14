@@ -28,7 +28,7 @@
                             <li>
                                 <a href="{{ route('auth.login.destroy') }}" id="logout">Logout</a>
 
-                                <form id="logout-form" action="{{ route('user.logout') }}" class="hidden" method="POST">
+                                <form id="logout-form" action="{{ route('auth.login.destroy') }}" class="hidden" method="POST">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
                                 </form>

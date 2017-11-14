@@ -9,6 +9,8 @@
     </head>
     <body>
         @include('layout.partials._nav')
+        @includeWhen(session()->get('flash_message'), 'layout.partials._alert')
+
         @yield('content')
         <script src="{{ mix('js/shareatalk.js') }}"></script>
     </body>
