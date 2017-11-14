@@ -7,7 +7,20 @@
     <div class="col-sm-8 col-sm-offset-2">
         <h1>News Feed</h1>
 
-        <p>Coming soon</p>
+        @foreach ($talks->chunk(2) as $chunk)
+        <div class="row">
+            @foreach ($chunk as $talk)
+            <div class="col-sm-6">
+                <a href="{{ route('talk.show', $talk->id) }}">
+                    <img class="img-responsive" src="{{ $talk->thumbnail }}" alt="{{ $talk->title }}">
+                </a>
+                <a href="{{ route('talk.show', $talk->id) }}">
+                    {{ $talk->title }}
+                </a>
+            </div>
+            @endforeach
+        </div>
+        @endforeach
     </div>
 </div>
 @endsection

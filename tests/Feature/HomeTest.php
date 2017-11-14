@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class HomeTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -45,6 +45,19 @@ class HomeTest extends TestCase
             'password'      => bcrypt('password'),
         ]);
 
+        $title = 'Cruddy by Design';
+
+        $talk = $user->talks()->create([
+            'url'           => 'https://www.youtube.com/watch?v=MF0jFKvS4SI',
+            'embed_url'     => 'https://www.youtube.com/embed/MF0jFKvS4SI',
+            'title'         => $title,
+            'description'   => 'Adam Wathan\'s Laracon US 2017 talk',
+            'thumbnail'     => 'https://i.ytimg.com/vi/MF0jFKvS4SI/maxresdefault.jpg',
+            'width'         => 1280,
+            'height'        => 720,
+            'platform'      => 'youtube',
+        ]);
+
         $this->assertInstanceOf(User::class, $user);
         $this->be($user);
         $this->assertAuthenticatedAs($user);
@@ -52,5 +65,6 @@ class HomeTest extends TestCase
         $response = $this->get(route('home'));
         $response->assertStatus(200);
         $response->assertSeeText('News Feed');
+        $response->assertSeeText($title);
     }
 }

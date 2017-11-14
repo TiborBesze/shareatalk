@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Talk;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,6 +19,10 @@ class HomeController extends Controller
 
     protected function authenticated()
     {
-        return view('user.index');
+        $talks = Talk::all();
+
+        return view('user.index')->with([
+            'talks'     => $talks,
+        ]);
     }
 }
