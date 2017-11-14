@@ -52,12 +52,12 @@ class TalkController extends Controller
 
         if ($user) {
             $followable = $user->id !== $talk->user->id;
-            $likable = 1;
+            $likeable = 1;
             $following = $user->following()->exists($talk->user);
             $liked = $user->liked_talks()->exists($talk);
         } else {
             $followable = 0;
-            $likable = 0;
+            $likeable = 0;
             $following = 0;
             $liked = 0;
         }
@@ -66,6 +66,7 @@ class TalkController extends Controller
         return view('talk.show')->with([
             'talk'          => $talk,
             'followable'    => $followable,
+            'likeable'      => $likeable,
             'following'     => $following,
             'liked'         => $liked,
         ]);
