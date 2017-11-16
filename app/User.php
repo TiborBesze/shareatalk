@@ -43,6 +43,11 @@ class User extends Authenticatable
         return !!$result;
     }
 
+    public function liked(Talk $talk)
+    {
+        return $this->liked_talks()->where('talk_id', '=', $talk->id)->exists();
+    }
+
     public function following()
     {
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
@@ -67,6 +72,16 @@ class User extends Authenticatable
         $result = $this->following()->detach($user->id);
 
         return !!$result;
+    }
+
+    public function followed(User $user)
+    {
+        return $this->following()->where('following_id', '=', $user->id)->exists();
+    }
+
+    public function followed_by(User $user)
+    {
+        return $this->followers()->where('follower_id', '=', $user->id)->exists();
     }
 
     public function getFullnameAttribute()
