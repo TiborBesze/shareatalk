@@ -17,6 +17,8 @@
                 <a href="{{ route('talk.show', $talk->id) }}">
                     {{ $talk->title }}
                 </a>
+                <div>Posted by: {{ $talk->user->fullname }}</div>
+                <div>Posted at: {{ $talk->created_at->format('d/m/Y') }}</div>
             </div>
             @endforeach
         </div>

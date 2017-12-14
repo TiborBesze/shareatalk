@@ -10,11 +10,35 @@ class HomeTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+    protected $talk;
+
     public function setUp()
     {
         parent::setUp();
 
         $this->disableExceptionHandling();
+
+        $this->user = User::create([
+            'firstname' => 'John',
+            'lastname' => 'Doe',
+            'email' => 'john.doe@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $this->title = 'Cruddy by Design';
+
+        $this->talk = $this->user->talks()->create([
+            'url'           => 'https://www.youtube.com/watch?v=MF0jFKvS4SI',
+            'embed_url'     => 'https://www.youtube.com/embed/MF0jFKvS4SI',
+            'title'         => $this->title,
+            'description'   => 'Adam Wathan\'s Laracon US 2017 talk',
+            'thumbnail'     => 'https://i.ytimg.com/vi/MF0jFKvS4SI/maxresdefault.jpg',
+            'width'         => 1280,
+            'height'        => 720,
+            'platform'      => 'youtube',
+        ]);
+
     }
 
     /** @test */
@@ -38,33 +62,33 @@ class HomeTest extends TestCase
     /** @test */
     public function authenticated_users_can_see_their_news_feed_when_visiting_the_home_page()
     {
-        $user = User::create([
-            'firstname'     => 'John',
-            'lastname'      => 'Doe',
-            'email'         => 'john.doe@example.com',
-            'password'      => bcrypt('password'),
-        ]);
-
-        $title = 'Cruddy by Design';
-
-        $talk = $user->talks()->create([
-            'url'           => 'https://www.youtube.com/watch?v=MF0jFKvS4SI',
-            'embed_url'     => 'https://www.youtube.com/embed/MF0jFKvS4SI',
-            'title'         => $title,
-            'description'   => 'Adam Wathan\'s Laracon US 2017 talk',
-            'thumbnail'     => 'https://i.ytimg.com/vi/MF0jFKvS4SI/maxresdefault.jpg',
-            'width'         => 1280,
-            'height'        => 720,
-            'platform'      => 'youtube',
-        ]);
-
-        $this->assertInstanceOf(User::class, $user);
-        $this->be($user);
-        $this->assertAuthenticatedAs($user);
+        $this->assertInstanceOf(User::class, $this->user);
+        $this->be($this->user);
+        $this->assertAuthenticatedAs($this->user);
 
         $response = $this->get(route('home'));
         $response->assertStatus(200);
         $response->assertSeeText('News Feed');
-        $response->assertSeeText($title);
+        $response->assertSeeText($this->title);
+    }
+
+    /** @test */
+    public function news_feed_shows_the_user_posted_the_talk()
+    {
+        $this->be($this->user);
+
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
+        $response->assertSeeText($this->title);
+        $response->assertSeeText('Posted by: ' . $this->talk->user->fullname);
+    }
+
+    /** @test */
+    public function news_feed_shows_the_created_at_date() {
+        $this->be($this->user);
+
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
+        $response->assertSeeText('Posted at: ' . $this->talk->created_at->format('d/m/Y'));
     }
 }
